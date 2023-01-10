@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build test image
+      run: docker-compose -f dockercompose.yml build
+    - name: Deploy test image
+      run: docker-compose -f dockercompose.yml up -d
+    - name: Analyze
+      run: docker container exec myapp:local flake8 -v
+      run: docker container exec myapp:local mypy myapp
+    - name: Test
+      run: docker container exec myapp:local pytest
+      
