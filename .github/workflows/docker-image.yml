@@ -20,3 +20,10 @@ jobs:
           docker container exec myapp mypy myapp
       - name: Test
         run: docker container exec myapp pytest
+      - name: Prework for Scan
+        run: docker save -o myapp.tar myapp:local
+      - name: Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          input: /github/workspace/myapp.tar
+          severity: "CRITICAL,HIGH"
