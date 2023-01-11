@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  myapp:
+    build:
+      context: ./myapp
+      dockerfile: Dockerfile
+      target: test
+    image: myapp:local
+    container_name: myapp
+    ports:
+      - "8000:8000"
