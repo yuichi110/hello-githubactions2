@@ -16,7 +16,7 @@ jobs:
         run: docker-compose -f dockercompose.yml up -d
       - name: Analyze
         run: |
-          docker container exec myapp:local flake8 -v
-          docker container exec myapp:local mypy myapp
+          docker container exec myapp flake8 -v
+          docker container exec myapp mypy myapp
       - name: Test
-        run: docker container exec myapp:local pytest
+        run: docker container exec myapp pytest
